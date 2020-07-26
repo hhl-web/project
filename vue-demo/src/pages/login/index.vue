@@ -21,7 +21,6 @@
           <el-button type="primary"
                      @click="submitForm('ruleForm')">登录</el-button>
           <el-button @click="resetForm('ruleForm')">注册</el-button>
-          <el-button @click="unreset('ruleForm')">注销</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -29,7 +28,7 @@
 </template>
 
 <script>
-  import {Login,Reset,unLogin} from '@/api';
+  import {Login,Reset} from '@/api';
 	export default{
 		name:'loginPage',
 		data(){
@@ -82,10 +81,10 @@
 					name:this.ruleForm.username,
 					password:this.ruleForm.password,
 				}).then(res=>{
-          console.log(res);
-          this.$store.commit('set_username',res.data.data);
-          this.$router.push('/home');
-          console.log(this.$router.push)
+          if(res.code==200){
+            this.$store.commit('set_username',res.data);
+            this.$router.push('/home');
+          }
 				}).catch(err=>{
 					console.log(err)
 				})
@@ -96,18 +95,16 @@
 					name:this.ruleForm.username,
 					password:this.ruleForm.password,
 				}).then(res=>{
-					console.log(res);
+					if(res.code==200){
+            this.$message({
+              type:'success',
+              message:'注册成功~'
+            })
+          }
 				}).catch(err=>{
 					console.log(err);
 				})
 			},
-			unreset(){
-				unLogin().then(res=>{
-					console.log(res);
-				}).catch(err=>{
-					console.log(err);
-				})
-			}
 		}
 	}
 </script>
@@ -116,7 +113,7 @@
 .login {
   width: 100%;
   height: 100%;
-  background: url('../../assets/img/login_bg.png');
+  background: url("../../assets/img/login_bg.png");
   .content {
     width: 360px;
     height: 320px;

@@ -27,17 +27,17 @@ class AjaxFetch {
       ...option,
     }
     let instance = axios.create()
-    this.interceptors(instance)
+    this.interceptors(instance,config.url)
     return instance(config)
   }
-  interceptors(instance) {
+  interceptors(instance,url) {
     instance.interceptors.request.use(
       (config) => {
         let CancelToken = axios.CancelToken
         //设置取消函数
         config.cancelToken = new CancelToken((c) => {
           //c是一个函数
-          store.commit('push_cancel', { fn: c, url: config.url }) //存放取消的函数实例
+          store.commit('push_cancel', { fn: c, url:url }) //存放取消的函数实例
         })
         if (Object.keys(this.queue).length == 0) {
           this._loading = Loading.service({
@@ -47,8 +47,8 @@ class AjaxFetch {
             background: 'rgba(0, 0, 0, 0.7)',
           })
         }
-        this.queue[config.url] = config.url
-        return config
+        this.queue[url] = url;
+        return config;
       },
       (err) => {
         return Promise.reject(err)
@@ -56,10 +56,9 @@ class AjaxFetch {
     )
     instance.interceptors.response.use(
       (response) => {
-		  console.log(response);
-        let { config, request, data } = response
-        store.commit('clear_cancel', config.url) //存放取消的函数实例
-        delete this.queue[config.url]
+        let {data} = response;
+        store.commit('filter_cancel',url) //存放取消的函数实例
+        delete this.queue[url]
         if (Object.keys(this.queue).length == 0) {
           this._loading.close()
         }
@@ -69,17 +68,21 @@ class AjaxFetch {
               type: 'error',
               message: data.msg,
             })
-            break
+            break;
           case 401:
             Message({
               type: 'warning',
               message: data.msg,
             })
-            break
+            break;
         }
-        return response
+        return data;
       },
       (err) => {
+        delete this.queue[url];
+        if (Object.keys(this.queue).length == 0) {
+          this._loading.close();
+        }
         return Promise.reject(err)
       }
     )

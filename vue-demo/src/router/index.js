@@ -1,11 +1,12 @@
 import Router from 'vue-router';
 import Vue from 'vue';
+import hookRouter from './hook';
 const originalPush = Router.prototype.push
 Router.prototype.push = function push(location) {
   return originalPush.call(this, location).catch(err => err)
 }
 Vue.use(Router);
-export default new Router({
+let router= new Router({
 	mode:'hash',
 	routes:[
 		{
@@ -19,3 +20,9 @@ export default new Router({
 		}
 	]
 })
+//路由前置守卫
+Object.values(hookRouter).forEach(hook=>{
+	//使用bind可在hook函数获取this=>router
+	router.beforeEach(hook.bind(router))
+})
+export default router;

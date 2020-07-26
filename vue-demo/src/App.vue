@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Login v-if="isShowLogin"></Login>
-    <div class="main">
+    <div class="main" v-else>
       <router-view></router-view>
     </div>
   </div>
@@ -31,11 +31,11 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
 #app {
   width: 100%;
   height: 100%;
-  .mian{
+  .main{
 	width: 100%;
   	height: 100%;
   }

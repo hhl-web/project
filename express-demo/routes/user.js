@@ -2,7 +2,7 @@
  * Author       : OBKoro1
  * Date         : 2020-07-22 21:54:25
  * LastEditors  : OBKoro1
- * LastEditTime : 2020-07-23 23:02:06
+ * LastEditTime : 2020-07-26 11:36:43
  * FilePath     : \reactc:\web-vue-案例\demo\express-demo\routes\user.js
  * Description  : 
  * https://github.com/OBKoro1
@@ -39,7 +39,6 @@ user.get('/login',function(req,res,next){
 						msg: "登录成功！！",
 						data:{
 							username:name,
-							password:password,
 						}
 					});
 				}

@@ -9,12 +9,6 @@ import AjaxFetch from '@/api/fetch';
 Vue.prototype.$api=AjaxFetch;
 Vue.config.productionTip = false;
 
-// import Router from 'vue-router'
-// const routerPush = Router.prototype.push
-// Router.prototype.push = function push(location) {
-//   return routerPush.call(this, location).catch(error=> error)
-// }
-
 import '@/assets/style/page.scss';
 import '@/assets/style/common.css';
 new Vue({
