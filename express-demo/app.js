@@ -11,8 +11,8 @@ let fs=require('fs');
 let corsRequest=require('./common/corsRequest.js');
 let loginFilter=require('./common/loginFilter.js');
 let user=require('./routes/user');
-// let indexRouter = require('./routes/index');
-// let postRouter=require('./routes/post');
+let uploadHandleRouter = require('./routes/uploadHandle.js');
+
 
 let app = express();
 // 输出日志到目录
@@ -35,10 +35,11 @@ loginFilter(app);
 //安装中间件
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(bodyParser())
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended: true}))
 //路由配置
 app.use('/api/user',user);
-// app.use('/', indexRouter);
+app.use('/api/uploadHandle', uploadHandleRouter);
 // app.use('/api/user/img',postRouter);
 
 //用来捕获错误处理函数

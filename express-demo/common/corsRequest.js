@@ -9,11 +9,12 @@ function corsRequest(app){
 	    //跨域允许的请求方式 
 	    res.header("Access-Control-Allow-Methods","DELETE,PUT,POST,GET,OPTIONS");
 			res.header("X-Powered-By","3.2.1");
-			res.header("Content-Type","application/json;charset=utf-8");
+			// res.header("Content-Type","application/json;charset=utf-8");
+			// res.header("Content-Type","application/json");
 			res.header("Access-Control-Allow-Credentials",true);
 			res.header("Cache-Control","no-store");
 	    if (req.method.toLowerCase() == 'options'){
-				res.send(200);  //让options尝试请求快速结束
+				res.sendStatus(200);  //让options尝试请求快速结束
 			}else{
 				next();
 			}

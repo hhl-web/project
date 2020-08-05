@@ -14,6 +14,7 @@
     "run-success-icon": "^1.0.0",
     "sass": "^1.26.8",
     "sass-loader": "^8.0.2",
+    "spark-md5": "^3.0.1",
     "vue": "^2.6.10",
     "vue-router": "^3.3.4",
     "vuex": "^3.4.0"

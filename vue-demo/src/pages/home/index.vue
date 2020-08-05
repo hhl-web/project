@@ -2,9 +2,12 @@
   <div class="home">
     <el-container style="min-height:100%">
       <el-header>
+        你好，{{username.username}}用户~欢迎来到home的主页
         <el-button @click="unreset('ruleForm')" id="unlogin">注销</el-button>
       </el-header>
-      <el-main>你好，{{username.username}}用户~欢迎来到home的主页</el-main>
+      <el-main>
+            <UploadFile></UploadFile>
+      </el-main>
       <el-footer>footer</el-footer>
     </el-container>
   </div>
@@ -13,11 +16,13 @@
 <script>
   import {mapState} from 'vuex';
   import {unLogin} from '@/api';
+  import UploadFile from '../upload/index'
 	export default{
     name:'loginPage',
     computed:{
       ...mapState(['username']),
     },
+    components:{UploadFile},
     methods:{
       unreset(){
 				unLogin().then(res=>{
